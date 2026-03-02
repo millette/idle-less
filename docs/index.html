@@ -736,8 +736,8 @@
                 <input id="calcCost" type="number" value="0.30" min="0.01" max="1" step="0.01" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-size:16px;">
             </label>
             <label style="font-size:14px;">
-                <span style="color:var(--text-dim);display:block;margin-bottom:6px;">Gateway draw (watts)</span>
-                <input id="calcGateway" type="number" value="5" min="1" max="50" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-size:16px;">
+                <span style="color:var(--text-dim);display:block;margin-bottom:6px;">Number of servers</span>
+                <input id="calcServers" type="number" value="1" min="1" max="100" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,0.3);color:var(--text);font-size:16px;">
             </label>
         </div>
         <div style="text-align:center;padding:20px;border-radius:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);">
@@ -745,6 +745,7 @@
             <div id="calcResult" style="font-size:36px;font-weight:800;color:var(--success);letter-spacing:-0.03em;"></div>
             <div id="calcKwh" style="font-size:14px;color:var(--text-dim);margin-top:4px;"></div>
             <div id="calcPayback" style="font-size:14px;color:var(--primary-light);margin-top:8px;font-weight:600;"></div>
+            <a id="calcBuyBtn" href="https://torbenit.lemonsqueezy.com/checkout/buy/020b2272-a1c7-41ea-a093-9d769269c47b" class="btn btn-primary" style="margin-top:16px;display:inline-block;">Get Wakeforce — pays for itself</a>
         </div>
     </div>
 
@@ -753,20 +754,28 @@
         const w = +document.getElementById('calcWatts').value;
         const h = +document.getElementById('calcHours').value;
         const c = +document.getElementById('calcCost').value;
-        const g = +document.getElementById('calcGateway').value;
+        const n = +document.getElementById('calcServers').value;
+        const g = 5;
         const sleepHours = 24 - h;
-        const kwhSaved = ((w - g) * sleepHours * 365) / 1000;
+        const kwhSavedPerServer = ((w - g) * sleepHours * 365) / 1000;
+        const kwhSaved = kwhSavedPerServer * n;
         const eurSaved = kwhSaved * c;
         document.getElementById('calcResult').textContent = '\u20AC' + eurSaved.toFixed(0) + '/year';
-        document.getElementById('calcKwh').textContent = kwhSaved.toFixed(0) + ' kWh saved per year';
-        const daysPayback = eurSaved > 0 ? Math.ceil(29 / (eurSaved / 365)) : 0;
+        document.getElementById('calcKwh').textContent = kwhSaved.toFixed(0) + ' kWh saved per year' + (n > 1 ? ' across ' + n + ' servers' : '');
+        var tier = {price: 29, label: 'Personal', url: 'https://torbenit.lemonsqueezy.com/checkout/buy/020b2272-a1c7-41ea-a093-9d769269c47b'};
+        if (n > 10) tier = {price: 199, label: 'Business', url: 'https://torbenit.lemonsqueezy.com/checkout/buy/69742d9e-253f-4593-b650-72a301e34d17'};
+        else if (n > 2) tier = {price: 79, label: 'Pro', url: 'https://torbenit.lemonsqueezy.com/checkout/buy/a594a72a-c008-46b0-898d-155d2cbfe9f1'};
+        const daysPayback = eurSaved > 0 ? Math.ceil(tier.price / (eurSaved / 365)) : 0;
         if (daysPayback > 0 && daysPayback < 365) {
-            document.getElementById('calcPayback').textContent = 'Wakeforce pays for itself in ' + daysPayback + ' days';
+            document.getElementById('calcPayback').textContent = 'Wakeforce ' + tier.label + ' (\u20AC' + tier.price + ') pays for itself in ' + daysPayback + ' days';
         } else {
             document.getElementById('calcPayback').textContent = '';
         }
+        var btn = document.getElementById('calcBuyBtn');
+        btn.href = tier.url;
+        btn.textContent = 'Get Wakeforce ' + tier.label + ' \u2014 \u20AC' + tier.price;
     }
-    document.querySelectorAll('#calcWatts,#calcHours,#calcCost,#calcGateway').forEach(el => el.addEventListener('input', calcSavings));
+    document.querySelectorAll('#calcWatts,#calcHours,#calcCost,#calcServers').forEach(el => el.addEventListener('input', calcSavings));
     calcSavings();
     </script>
 </section>
@@ -859,6 +868,13 @@
         <div style="text-align:center;font-size:13px;color:var(--text-dim);"><span style="display:block;font-size:22px;margin-bottom:4px;">&#9889;</span>Instant delivery</div>
         <div style="text-align:center;font-size:13px;color:var(--text-dim);"><span style="display:block;font-size:22px;margin-bottom:4px;">&#8734;</span>No subscription</div>
         <div style="text-align:center;font-size:13px;color:var(--text-dim);"><span style="display:block;font-size:22px;margin-bottom:4px;">&#9993;</span>Email support</div>
+        <div style="text-align:center;font-size:13px;color:var(--text-dim);"><span style="display:block;font-size:22px;margin-bottom:4px;">&#9989;</span>30-day money-back guarantee</div>
+    </div>
+    <div style="max-width:600px;margin:32px auto 0;padding:20px 24px;background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(34,197,94,0.02));border:1px solid rgba(34,197,94,0.2);border-radius:12px;text-align:center;">
+        <p style="margin:0;font-size:15px;color:var(--text-dim);line-height:1.6;">
+            <strong style="color:#22c55e;">Pays for itself in under 5 weeks.</strong><br>
+            A single server idling at 120W costs ~&euro;315/year. Wakeforce Personal (&euro;29) saves you &euro;286 in the first year alone. That&rsquo;s a <strong style="color:var(--text);">10x return</strong> on your investment.
+        </p>
     </div>
 </section>
 
@@ -883,6 +899,14 @@
         <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
             <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">Can idle-less run on a Raspberry Pi? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
             <div style="padding:0 20px 16px;color:var(--text-dim);line-height:1.7;">Yes! Both Docker images support ARM64 natively. A Raspberry Pi 4 or 5 is the ideal always-on gateway — it uses about 3-5 watts while keeping your power-hungry servers sleeping until needed.</div>
+        </details>
+        <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
+            <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">Is there a money-back guarantee? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
+            <div style="padding:0 20px 16px;color:var(--text-dim);line-height:1.7;">Yes. If Wakeforce doesn't work for your setup, contact us within 30 days for a full refund — no questions asked. We want you to be confident in your purchase.</div>
+        </details>
+        <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
+            <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">How quickly does it pay for itself? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
+            <div style="padding:0 20px 16px;color:var(--text-dim);line-height:1.7;">At typical EU electricity rates (&euro;0.30/kWh), a server idling at 120W costs &euro;315/year. With idle-less, you save most of that. The &euro;29 Personal license pays for itself in under 5 weeks. After that, it's pure savings — year after year.</div>
         </details>
     </div>
 </section>
