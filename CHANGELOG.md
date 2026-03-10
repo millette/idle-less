@@ -2,6 +2,16 @@
 
 All notable changes to idle-less are documented here.
 
+## [2.6.0] - 2026-03-02
+
+### Changed
+- **Enhanced savings calculator**: Added "Number of servers" field, dynamic tier recommendation (Personal/Pro/Business), and direct buy CTA button below savings result for improved conversion
+
+## [2.5.0] - 2026-03-02
+
+### Added
+- **Launch urgency banner**: Green "Just launched! First 50 customers get priority support free" banner at top of landing page with scroll-to-pricing click handler
+
 ## [2.4.0] - 2026-03-02
 
 ### Changed
