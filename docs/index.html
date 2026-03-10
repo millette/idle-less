@@ -28,7 +28,7 @@
     <link rel="canonical" href="https://tvup.github.io/idle-less/">
 
     <!-- Keywords for SEO -->
-    <meta name="keywords" content="wake-on-lan, reverse proxy, docker, nginx, server management, homelab, self-hosted, power management, raspberry pi, wol">
+    <meta name="keywords" content="wake-on-lan, reverse proxy, docker, nginx, server management, homelab, self-hosted, power management, raspberry pi, wol, api, mcp, programmatic, automation, curl">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script type="application/ld+json">
     {
@@ -111,6 +111,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Yes! idle-less provides native ARM64 Docker images specifically built for Raspberry Pi. A Pi 4 or newer is recommended as the always-on gateway — it draws only about 5W of power while keeping all your domains reachable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I wake servers from scripts, APIs, or AI agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Since v2.7.0, idle-less includes a server-side wake-and-wait API. Non-browser clients like curl, MCP servers, and AI agents can send a regular HTTP request — idle-less detects the Accept header, wakes the server, polls until it is online, and returns the response. No splash page, no JavaScript — just a blocking HTTP call."
           }
         }
       ]
@@ -685,6 +693,11 @@
             <h3>Professional waiting screen</h3>
             <p>Visitors see a polished status page while the server wakes — with real-time health checks and progress.</p>
         </div>
+        <div class="feature">
+            <div class="feature-icon">&#128268;</div>
+            <h3>API-ready</h3>
+            <p>Non-browser clients (curl, scripts, MCP, AI agents) wake servers transparently via the wake-and-wait API. No splash page — just a blocking HTTP call that returns when your server is online.</p>
+        </div>
     </div>
 </section>
 
@@ -899,6 +912,10 @@
         <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
             <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">Can idle-less run on a Raspberry Pi? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
             <div style="padding:0 20px 16px;color:var(--text-dim);line-height:1.7;">Yes! Both Docker images support ARM64 natively. A Raspberry Pi 4 or 5 is the ideal always-on gateway — it uses about 3-5 watts while keeping your power-hungry servers sleeping until needed.</div>
+        </details>
+        <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
+            <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">Can I wake servers from scripts, APIs, or AI agents? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
+            <div style="padding:0 20px 16px;color:var(--text-dim);line-height:1.7;">Yes! idle-less includes a server-side wake-and-wait API. Non-browser clients like curl, MCP servers, and AI agents can send a regular HTTP request &mdash; idle-less detects the Accept header, wakes the server, polls until it is online, and returns the response. No splash page, no JavaScript &mdash; just a blocking HTTP call.</div>
         </details>
         <details style="margin-bottom:16px;border:1px solid var(--border);border-radius:10px;padding:0;">
             <summary style="cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;">Is there a money-back guarantee? <span style="font-size:20px;color:var(--text-dim);transition:transform 0.2s;">+</span></summary>
