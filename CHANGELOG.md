@@ -2,6 +2,12 @@
 
 All notable changes to idle-less are documented here.
 
+## [2.8.0] - 2026-03-10
+
+### Added
+- **Server alive endpoint**: New `/api/alive.php` endpoint for checking backend server status without sending Wake-on-LAN packets — ideal for monitoring dashboards, health checks, and pre-flight probes
+- Returns `online` boolean, `state`, and `response_time_ms` for latency tracking
+
 ## [2.7.0] - 2026-03-10
 
 ### Added
