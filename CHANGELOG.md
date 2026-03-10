@@ -2,6 +2,20 @@
 
 All notable changes to idle-less are documented here.
 
+## [2.7.0] - 2026-03-10
+
+### Added
+- **Server-side wake-and-wait API**: New `/api/wake-and-wait.php` endpoint that blocks until the backend is online, enabling non-browser clients (MCP, curl, APIs) to transparently wake sleeping servers
+- **Per-domain backend config via nginx headers**: Each domain's backend settings (IP, MAC, port, health path) are passed as `X-Backend-*` headers to Wakeforce, supporting multi-domain WoL routing from a single Wakeforce instance
+- **Accept-header routing**: Nginx automatically routes non-browser requests (`Accept: application/json`) to the wake-and-wait API instead of the browser splash page
+- **Shared API utilities**: Extracted common validation, network probing, and HTTP health check functions into `common.php`
+
+### Fixed
+- **PHP 8.2 TypeError**: Cast port values to `int` before passing to `isValidPort()` in `status.php` and `knock.php`
+- **Nginx if+proxy_pass incompatibility**: Restructured location blocks to avoid the "evil if" anti-pattern with `proxy_pass`
+- **JavaScript syntax error**: Replaced Unicode smart quotes with ASCII quotes in gateway splash page
+- **Redundant log prefix**: Removed duplicate function name in `http_ok` log message
+
 ## [2.6.0] - 2026-03-02
 
 ### Changed
