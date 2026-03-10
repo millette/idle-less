@@ -2,6 +2,11 @@
 
 All notable changes to idle-less are documented here.
 
+## [2.8.1] - 2026-03-10
+
+### Added
+- **CORS support on alive endpoint**: Cross-origin requests now work out of the box, enabling browser-based dashboards to check server status without `no-cors` mode
+
 ## [2.8.0] - 2026-03-10
 
 ### Added
