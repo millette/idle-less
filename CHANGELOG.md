@@ -2,6 +2,23 @@
 
 All notable changes to idle-less are documented here.
 
+## [3.0.0] - 2026-03-12
+
+### Changed
+- **Wakeforce migrated from vanilla PHP to Laravel 12** — full rewrite with proper routing, dependency injection, middleware, and Blade views
+- All API endpoints now use clean URLs without `.php` extension (`/api/status` instead of `/api/status.php`)
+- Nginx location blocks updated to match new Laravel routing
+
+### Added
+- **Persona-based localization** — Danish and English with three tone variants (neutral, technical, humorous) via `TransHelper` and `@persona` Blade directives
+- **Configurable no-wake patterns** — `DOMAIN_{i}_NO_WAKE_PATTERNS` env var prevents background API polling from triggering Wake-on-LAN (returns 503 directly)
+- **Dev environment** — `docker-compose.dev.yml` with mock backend, license bypass, and hot-reload
+- Feature tests for TransHelper
+
+### Fixed
+- **Critical: inverted WoL logic** — `KnockController` was sending wake packets when the backend was already online and skipping them when offline
+- **NO_WAKE_PATTERNS examples too broad** — `/api/agents/` blocked user-initiated chat requests; narrowed to specific polling endpoints
+
 ## [2.8.1] - 2026-03-10
 
 ### Added
