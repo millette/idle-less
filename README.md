@@ -82,7 +82,10 @@ DOMAIN_1_CONFIG=wakeforce
 DOMAIN_1_IDLE_SERVICE=wakeforce_1:8182
 DOMAIN_1_MAC=D8:9E:F3:12:D0:10
 DOMAIN_1_BROADCAST=192.168.1.255
+DOMAIN_1_NO_WAKE_PATTERNS=/health|/api/agents/|/api/convos
 ```
+
+`NO_WAKE_PATTERNS` prevents background API polling from waking a sleeping server — matching requests return 503 directly instead of triggering Wake-on-LAN.
 
 Multiple domains are supported via the `DOMAIN_{i}_*` pattern.
 
